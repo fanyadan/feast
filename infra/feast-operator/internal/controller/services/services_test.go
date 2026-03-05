@@ -42,6 +42,12 @@ func applySpecToStatus(fs *feastdevv1.FeatureStore) {
 	Expect(k8sClient.Status().Update(context.Background(), fs)).To(Succeed())
 }
 
+func applySpecToStatusForCreate(fs *feastdevv1.FeatureStore) {
+	fs.Status.Applied = feastdevv1.FeatureStoreSpec{
+		FeastProject: fs.Spec.FeastProject,
+	}
+}
+
 var _ = Describe("Registry Service", func() {
 	var (
 		featureStore       *feastdevv1.FeatureStore
@@ -93,6 +99,7 @@ var _ = Describe("Registry Service", func() {
 			},
 		}
 
+		applySpecToStatusForCreate(featureStore)
 		Expect(k8sClient.Create(ctx, featureStore)).To(Succeed())
 		applySpecToStatus(featureStore)
 

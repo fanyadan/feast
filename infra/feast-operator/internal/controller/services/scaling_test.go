@@ -100,6 +100,7 @@ var _ = Describe("Horizontal Scaling", func() {
 			},
 		}
 
+		applySpecToStatusForCreate(featureStore)
 		Expect(k8sClient.Create(ctx, featureStore)).To(Succeed())
 		applySpecToStatus(featureStore)
 
@@ -175,6 +176,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			Expect(k8sClient.Delete(ctx, fs)).To(Succeed())
 		})
@@ -190,6 +192,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			err := k8sClient.Create(ctx, fs)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("online store"))
@@ -213,6 +216,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			err := k8sClient.Create(ctx, fs)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("online store"))
@@ -237,6 +241,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			err := k8sClient.Create(ctx, fs)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("offline store"))
@@ -253,6 +258,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			err := k8sClient.Create(ctx, fs)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("registry"))
@@ -278,6 +284,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			err := k8sClient.Create(ctx, fs)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("registry"))
@@ -303,6 +310,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			Expect(k8sClient.Delete(ctx, fs)).To(Succeed())
 		})
@@ -327,6 +335,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			Expect(k8sClient.Delete(ctx, fs)).To(Succeed())
 		})
@@ -347,6 +356,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			Expect(k8sClient.Delete(ctx, fs)).To(Succeed())
 		})
@@ -359,6 +369,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					Replicas:     ptr.To(int32(1)),
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			Expect(k8sClient.Delete(ctx, fs)).To(Succeed())
 		})
@@ -370,6 +381,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					FeastProject: "celtest",
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			Expect(k8sClient.Delete(ctx, fs)).To(Succeed())
 		})
@@ -387,6 +399,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			err := k8sClient.Create(ctx, fs)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("online store"))
@@ -404,6 +417,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			err := k8sClient.Create(ctx, fs)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("online store"))
@@ -424,6 +438,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			err := k8sClient.Create(ctx, fs)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("mutually exclusive"))
@@ -715,6 +730,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			err := k8sClient.Create(ctx, fs)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Exactly one of minAvailable or maxUnavailable"))
@@ -733,6 +749,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			err := k8sClient.Create(ctx, fs)
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Exactly one of minAvailable or maxUnavailable"))
@@ -753,6 +770,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			Expect(k8sClient.Delete(ctx, fs)).To(Succeed())
 		})
@@ -772,6 +790,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			Expect(k8sClient.Delete(ctx, fs)).To(Succeed())
 		})
@@ -952,6 +971,7 @@ var _ = Describe("Horizontal Scaling", func() {
 
 		It("should allow scaling up via the scale sub-resource with DB persistence", func() {
 			fs := newDBFeatureStore("scale-sub-valid")
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			defer func() { Expect(k8sClient.Delete(ctx, fs)).To(Succeed()) }()
 
@@ -978,6 +998,7 @@ var _ = Describe("Horizontal Scaling", func() {
 					FeastProject: "scaletest",
 				},
 			}
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			defer func() { Expect(k8sClient.Delete(ctx, fs)).To(Succeed()) }()
 
@@ -993,6 +1014,7 @@ var _ = Describe("Horizontal Scaling", func() {
 		It("should read the status replicas from the scale sub-resource", func() {
 			fs := newDBFeatureStore("scale-sub-status")
 			fs.Spec.Replicas = ptr.To(int32(2))
+			applySpecToStatusForCreate(fs)
 			Expect(k8sClient.Create(ctx, fs)).To(Succeed())
 			defer func() { Expect(k8sClient.Delete(ctx, fs)).To(Succeed()) }()
 

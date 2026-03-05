@@ -23,7 +23,7 @@ func boolPtr(b bool) *bool {
 }
 
 func createFeatureStore() *feastdevv1.FeatureStore {
-	return &feastdevv1.FeatureStore{
+	fs := &feastdevv1.FeatureStore{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      resourceName,
 			Namespace: namespaceName,
@@ -32,6 +32,10 @@ func createFeatureStore() *feastdevv1.FeatureStore {
 			FeastProject: "test_project",
 		},
 	}
+	fs.Status.Applied = feastdevv1.FeatureStoreSpec{
+		FeastProject: fs.Spec.FeastProject,
+	}
+	return fs
 }
 
 func attemptInvalidCreationAndAsserts(ctx context.Context, featurestore *feastdevv1.FeatureStore, matcher string) {

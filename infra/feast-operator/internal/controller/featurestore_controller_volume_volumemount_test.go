@@ -170,7 +170,7 @@ func createFeatureStoreVolumeResource(resourceName string, image string, pullPol
 		MountPath: "/data",
 	}
 
-	return &feastdevv1.FeatureStore{
+	fs := &feastdevv1.FeatureStore{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      resourceName,
 			Namespace: "default",
@@ -212,4 +212,6 @@ func createFeatureStoreVolumeResource(resourceName string, image string, pullPol
 			},
 		},
 	}
+	applySpecToStatusForCreate(fs)
+	return fs
 }

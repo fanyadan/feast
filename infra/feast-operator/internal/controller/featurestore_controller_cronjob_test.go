@@ -58,6 +58,7 @@ var _ = Describe("FeatureStore Controller - Feast CronJob", func() {
 					},
 					Spec: feastdevv1.FeatureStoreSpec{FeastProject: feastProject},
 				}
+				applySpecToStatusForCreate(resource)
 				Expect(k8sClient.Create(ctx, resource)).To(Succeed())
 			}
 		})

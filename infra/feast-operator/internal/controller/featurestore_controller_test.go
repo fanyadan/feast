@@ -78,6 +78,7 @@ var _ = Describe("FeatureStore Controller", func() {
 					},
 					Spec: feastdevv1.FeatureStoreSpec{FeastProject: feastProject},
 				}
+				applySpecToStatusForCreate(resource)
 				Expect(k8sClient.Create(ctx, resource)).To(Succeed())
 			}
 		})
@@ -1070,6 +1071,7 @@ var _ = Describe("FeatureStore Controller", func() {
 			}
 			resource.SetGroupVersionKind(feastdevv1.GroupVersion.WithKind("FeatureStore"))
 			nsName := client.ObjectKeyFromObject(resource)
+			applySpecToStatusForCreate(resource)
 			err = k8sClient.Create(ctx, resource)
 			Expect(err).NotTo(HaveOccurred())
 			_, err = controllerReconciler.Reconcile(ctx, reconcile.Request{
@@ -1291,6 +1293,7 @@ var _ = Describe("FeatureStore Controller", func() {
 					},
 				}
 				resource.SetGroupVersionKind(feastdevv1.GroupVersion.WithKind("FeatureStore"))
+				applySpecToStatusForCreate(resource)
 				err := k8sClient.Create(ctx, resource)
 				Expect(err).NotTo(HaveOccurred())
 
@@ -1355,6 +1358,7 @@ var _ = Describe("FeatureStore Controller", func() {
 				},
 			}
 			disabledResource.SetGroupVersionKind(feastdevv1.GroupVersion.WithKind("FeatureStore"))
+			applySpecToStatusForCreate(disabledResource)
 
 			err := k8sClient.Create(ctx, disabledResource)
 			Expect(err).To(HaveOccurred())
@@ -1536,6 +1540,7 @@ var _ = Describe("FeatureStore Controller", func() {
 					},
 				},
 			}
+			applySpecToStatusForCreate(remote)
 			Expect(k8sClient.Create(ctx, remote)).To(Succeed())
 			reconciler := &FeatureStoreReconciler{
 				Client: k8sClient,
