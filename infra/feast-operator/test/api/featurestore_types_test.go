@@ -54,8 +54,11 @@ func onlineStoreWithAbsolutePathForPvc(featureStore *feastdevv1.FeatureStore) *f
 		OnlineStore: &feastdevv1.OnlineStore{
 			Persistence: &feastdevv1.OnlineStorePersistence{
 				FilePersistence: &feastdevv1.OnlineStoreFilePersistence{
-					Path:      "/data/online_store.db",
-					PvcConfig: &feastdevv1.PvcConfig{},
+					Path: "/data/online_store.db",
+					PvcConfig: &feastdevv1.PvcConfig{
+						Create:    &feastdevv1.PvcCreate{},
+						MountPath: "/data/online",
+					},
 				},
 			},
 		},
@@ -115,8 +118,11 @@ func registryWithAbsolutePathForPvc(featureStore *feastdevv1.FeatureStore) *feas
 			Local: &feastdevv1.LocalRegistryConfig{
 				Persistence: &feastdevv1.RegistryPersistence{
 					FilePersistence: &feastdevv1.RegistryFilePersistence{
-						Path:      "/data/registry.db",
-						PvcConfig: &feastdevv1.PvcConfig{},
+						Path: "/data/registry.db",
+						PvcConfig: &feastdevv1.PvcConfig{
+							Create:    &feastdevv1.PvcCreate{},
+							MountPath: "/data/registry",
+						},
 					}},
 			},
 		},
@@ -196,7 +202,9 @@ func pvcConfigWithNeitherRefNorCreate(featureStore *feastdevv1.FeatureStore) *fe
 		OfflineStore: &feastdevv1.OfflineStore{
 			Persistence: &feastdevv1.OfflineStorePersistence{
 				FilePersistence: &feastdevv1.OfflineStoreFilePersistence{
-					PvcConfig: &feastdevv1.PvcConfig{},
+					PvcConfig: &feastdevv1.PvcConfig{
+						MountPath: "/data/offline",
+					},
 				},
 			},
 		},
@@ -213,7 +221,8 @@ func pvcConfigWithBothRefAndCreate(featureStore *feastdevv1.FeatureStore) *feast
 						Ref: &corev1.LocalObjectReference{
 							Name: "pvc",
 						},
-						Create: &feastdevv1.PvcCreate{},
+						Create:    &feastdevv1.PvcCreate{},
+						MountPath: "/data/offline",
 					},
 				},
 			},
@@ -296,7 +305,11 @@ func authzConfigWithOidc(featureStore *feastdevv1.FeatureStore) *feastdevv1.Feat
 	if fsCopy.Spec.AuthzConfig == nil {
 		fsCopy.Spec.AuthzConfig = &feastdevv1.AuthzConfig{}
 	}
-	fsCopy.Spec.AuthzConfig.OidcAuthz = &feastdevv1.OidcAuthz{}
+	fsCopy.Spec.AuthzConfig.OidcAuthz = &feastdevv1.OidcAuthz{
+		SecretRef: corev1.LocalObjectReference{
+			Name: "oidc-secret",
+		},
+	}
 	return fsCopy
 }
 
@@ -307,6 +320,9 @@ func onlineStoreWithDBPersistenceType(dbPersistenceType string, featureStore *fe
 			Persistence: &feastdevv1.OnlineStorePersistence{
 				DBPersistence: &feastdevv1.OnlineStoreDBStorePersistence{
 					Type: dbPersistenceType,
+					SecretRef: corev1.LocalObjectReference{
+						Name: "online-store-secret",
+					},
 				},
 			},
 		},
@@ -321,6 +337,9 @@ func offlineStoreWithDBPersistenceType(dbPersistenceType string, featureStore *f
 			Persistence: &feastdevv1.OfflineStorePersistence{
 				DBPersistence: &feastdevv1.OfflineStoreDBStorePersistence{
 					Type: dbPersistenceType,
+					SecretRef: corev1.LocalObjectReference{
+						Name: "offline-store-secret",
+					},
 				},
 			},
 		},
@@ -336,6 +355,9 @@ func registryStoreWithDBPersistenceType(dbPersistenceType string, featureStore *
 				Persistence: &feastdevv1.RegistryPersistence{
 					DBPersistence: &feastdevv1.RegistryDBStorePersistence{
 						Type: dbPersistenceType,
+						SecretRef: corev1.LocalObjectReference{
+							Name: "registry-store-secret",
+						},
 					},
 				},
 			},
