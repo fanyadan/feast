@@ -5693,6 +5693,7 @@ spec:
                 type: object
             required:
             - feastProject
+            - replicas
             type: object
             x-kubernetes-validations:
             - message: replicas > 1 and services.scaling.autoscaling are mutually
@@ -11458,6 +11459,7 @@ spec:
                     type: object
                 required:
                 - feastProject
+                - replicas
                 type: object
                 x-kubernetes-validations:
                 - message: replicas > 1 and services.scaling.autoscaling are mutually
@@ -11600,8 +11602,6 @@ spec:
                     type: string
                 type: object
             type: object
-        required:
-        - spec
         type: object
     served: true
     storage: true
@@ -20200,12 +20200,7 @@ spec:
                     description: ui is the UI service hostname.
                     type: string
                 type: object
-            required:
-            - applied
             type: object
-        required:
-        - spec
-        - status
         type: object
     served: true
     storage: false

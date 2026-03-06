@@ -95,7 +95,6 @@ var _ = Describe("FeatureStore Controller - Feast service TLS", func() {
 						},
 					},
 				}
-				applySpecToStatusForCreate(resource)
 				Expect(k8sClient.Create(ctx, resource)).To(Succeed())
 			}
 		})
@@ -470,11 +469,6 @@ var _ = Describe("Test mountCustomCABundle functionality", func() {
 				OnlineStore:  &feastdevv1.OnlineStore{Server: &feastdevv1.ServerConfigs{}},
 				OfflineStore: &feastdevv1.OfflineStore{Server: &feastdevv1.ServerConfigs{}},
 				UI:           &feastdevv1.ServerConfigs{},
-			},
-		},
-		Status: feastdevv1.FeatureStoreStatus{
-			Applied: feastdevv1.FeatureStoreSpec{
-				FeastProject: feastProject,
 			},
 		},
 	}

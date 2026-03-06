@@ -84,7 +84,6 @@ var _ = Describe("FeatureStore Controller - Feast service LogLevel", func() {
 						},
 					},
 				}
-				applySpecToStatusForCreate(resource)
 				Expect(k8sClient.Create(ctx, resource)).To(Succeed())
 			}
 		})

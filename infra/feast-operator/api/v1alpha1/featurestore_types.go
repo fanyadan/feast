@@ -833,7 +833,6 @@ type FeatureStoreStatus struct {
 	// +patchMergeKey=type
 	Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"`
 	// applied shows the currently applied feast configuration, including any pertinent defaults.
-	// +required
 	Applied FeatureStoreSpec `json:"applied,omitempty"`
 	// clientConfigMap is the ConfigMap containing a client `feature_store.yaml` for this feast deployment.
 	// +optional
@@ -886,10 +885,8 @@ type FeatureStore struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	// spec defines the desired state of FeatureStore.
-	// +required
 	Spec FeatureStoreSpec `json:"spec,omitempty"`
 	// status defines the observed state of FeatureStore.
-	// +required
 	Status FeatureStoreStatus `json:"status,omitempty"`
 }
 

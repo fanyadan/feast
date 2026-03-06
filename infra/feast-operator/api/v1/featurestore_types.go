@@ -95,10 +95,9 @@ type FeatureStoreSpec struct {
 	BatchEngine *BatchEngineConfig `json:"batchEngine,omitempty"`
 	// replicas is the desired number of pod replicas. Used by the scale sub-resource.
 	// Mutually exclusive with services.scaling.autoscaling.
-	// +default=1
-	// +optional
+	// +kubebuilder:default=1
 	// +kubebuilder:validation:Minimum=1
-	Replicas *int32 `json:"replicas,omitempty"`
+	Replicas *int32 `json:"replicas"`
 }
 
 // FeastProjectDir defines how to create the feast project directory.
@@ -919,7 +918,6 @@ type FeatureStoreStatus struct {
 	// +patchMergeKey=type
 	Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"`
 	// applied shows the currently applied feast configuration, including any pertinent defaults.
-	// +optional
 	Applied FeatureStoreSpec `json:"applied,omitempty"`
 	// clientConfigMap is the ConfigMap containing a client `feature_store.yaml` for this feast deployment.
 	// +optional
@@ -992,10 +990,8 @@ type FeatureStore struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	// spec defines the desired state of FeatureStore.
-	// +required
 	Spec FeatureStoreSpec `json:"spec,omitempty"`
 	// status defines the observed state of FeatureStore.
-	// +optional
 	Status FeatureStoreStatus `json:"status,omitempty"`
 }
 

@@ -64,6 +64,14 @@ linters:
       - path-except: "api/.*"
         linters:
           - kubeapilinter
+      - path: "api/v1/featurestore_types.go"
+        linters:
+          - kubeapilinter
+        source: 'Applied FeatureStoreSpec|Spec FeatureStoreSpec|Status FeatureStoreStatus|Replicas \\*int32'
+      - path: "api/v1alpha1/featurestore_types.go"
+        linters:
+          - kubeapilinter
+        source: 'Applied FeatureStoreSpec|Spec FeatureStoreSpec|Status FeatureStoreStatus'
 
 formatters:
   enable:

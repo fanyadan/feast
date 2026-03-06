@@ -95,14 +95,8 @@ func deleteEnvFromSecretAndConfigMap() {
 	Expect(err).ToNot(HaveOccurred())
 }
 
-func applySpecToStatusForCreate(fs *feastdevv1.FeatureStore) {
-	fs.Status.Applied = feastdevv1.FeatureStoreSpec{
-		FeastProject: fs.Spec.FeastProject,
-	}
-}
-
 func createFeatureStoreResource(resourceName string, image string, pullPolicy corev1.PullPolicy, envVars *[]corev1.EnvVar, envFromVar *[]corev1.EnvFromSource) *feastdevv1.FeatureStore {
-	fs := &feastdevv1.FeatureStore{
+	return &feastdevv1.FeatureStore{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      resourceName,
 			Namespace: "default",
@@ -157,8 +151,6 @@ func createFeatureStoreResource(resourceName string, image string, pullPolicy co
 			},
 		},
 	}
-	applySpecToStatusForCreate(fs)
-	return fs
 }
 
 func withEnvFrom() *[]corev1.EnvFromSource {
